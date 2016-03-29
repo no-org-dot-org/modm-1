@@ -1,0 +1,164 @@
+MODM-1 day 2
+
+#topic Day planning
+Topics
+Common ground across VNFMs, tools, etc
+- tools/components/catalog
+- standards/models/event-stream (convergence on log format/snmp etc)
+- use cases
+
+Bryan: 
+- let's assume that data format interoperability is required, thus the related aspects e.g. parser are a key opportunity for collaboration
+- beyong that, what are the aspects that we would consider the biggest commodity opportunity, thus collaborative/reuse opportunity
+- what are the aspects that are the most differentiation-enabling, thus should be the focus point for extension/plugin APIs or at least for now not the focus for collaboration
+
+VNFM seemed to be one area where there was most consensus on commonality
+Chris: we need to ensure we have a common understanding of what a VNFM is
+
+Tom: we need to focus on code as the target, rather than boxes in a diagram
+Bryan: let's also explain what we mean by the terms e.g. VNFM and the scope e.g. a VNFM can completely manage a service environment for a unified complex VNF e.g. IMS. In other cases multiple VNFs are chained and need to be managed by a higher-focusing manager (SO/NFVO?).
+This implies that the software approach needs to supports functional recursion, e.g. VNFMs can manage VNFMs.
+We need to come to a common understanding of what's in the VNFM box.
+Bryan: We need to start with the basis that a VNF is as defined by ETSI and is recursive/multi-component and potentially (per deployment requirements) multi-site etc. A VNFM (maybe a system of them) has in its scope the requirement to manage that VNF.
+
+Tom: Catalog is a good example of a commodity item - can we converge on that. We need to avoid projects wasting their time on duplicating the common parts.
+
+Subcomponents of the catalog that we can discuss:
+- the catalog entries - are they CSARs complete in themselves, or do they also reference other metadata outside the CSAR (but also in the catalog)
+Tom: want to get to: is there a catalog format common to all the projects, what DB background is common, what entry formats are common
+OK - it seems that the Catalog is a good place to start
+Tom: does is matter what the catalog contains, or only the format for it
+?: the information model for it is the important thing - what does the VNFM need to know about the VNF
+Low-hanging fruit will be to work on converging things that are already implemented, vs things that can be designed by us...
+Implemented a catalog: Rift.ware, ManageIQ, OpenContrail, Cloudify, Tacker, Murano
+Can we pick one of these, converge on it, and claim success?
+Is the running inventory an aspect of the catalog?
+- consensus is no
+Arthur: do we want agree upon CSAR on the standard format for delivery?
+- Cloudify and Tacker are working toward CSAR support
+Tom: a portable format is the key, but also a common code base
+Matt Rutkowski needs to be consulted on CSAR support in Murano (also Mirantis)
+(In the working slide being shown) what is the relation of the NSD to the role of the VNFM?
+- that is an open question - can the VNFM manage a service? why or why not?
+(want to wrap up the catalog discussion before moving on to NSD issues)
+
+CSAR is simple, including only the VNFD? Or does the CSAR include an NSD?
+Will the code we are developing in common support a common catalog across multiple SP's (presumably an objective enabling a marketplace).
+
+(discussion of how CSAR relates to OVF) OVF addresses security aspects of OVF onboarding. OVF also supports multiple images etc.
+- We should consider the features of OVF vs CSAR not with the intent to switch to OVF but to ensure we have functional equivalence where needed.
+Open question: what is currently supported in open source projects re validation of onboarded CSAR files?
+- Are we considering here value in working on a common onboarding system, rather than assuming that we start with a catalog with entries - what format are they, and how are they processed? We can get to the broader/higher issues of how to enable an ecosystem through common onboarding/validation/cataloging tools, but starting bottom up we might want to go no further than an existing catalog and entries as ther starting point.
+
+Do we intent to include VM images in the CSAR?
+Common aspects in CSAR:
+- image name, type, metadata
+Metadata is a container describing the VNF, and dependencies
+We need a catalog library in python that lets us import catalog entries in some format (CSAR is one candidate)
+Cloudify has interest in supporting this.
+Sridhar: this should be a library that multiple projects can consume.
+
+Catalog does not include the running instance references.
+Any other aspects of the catalog
+Is the NSD in a separate set of catalog entries vs the VNF entries?
+
+How are catalog entries validated? (is this a common area)
+Rift.ware using Yangtools extended toward information models to validate the model.
+Checking if the contents are right.
+Whether the target VIM can support the VNF. Customers wanted to be sure the VNFD would actually work.
+
+Cloudify validates the BP vs the plugins in (or ref'd by) the GZIP (not yet supporting CSAR).
+Code is parsed and then validated against the endpoints.
+
+Are there any security scan features already developed and in common as part of the validation?
+- hash validation is supported in Rift.ware
+
+Tacker uses the OS TOSCA parser during deployment. Planning to add to onboarding. 
+
+What is relationship to OASIS?
+- we would be creating a code base with multiple influences (including things not yet in the OASIS spec)
+
+ARIA provides a reference implementation for TOSCA including a parser and plugin framework. 
+CSAR validation tools are one of the first focus we can include from ARIA as a reusable library:
+- CSAR validator
+- TOSCA parser (thus validator)
+
+The other part of ARIA (the plugin framework that processes the VNF per diverse VIMs) may overlap with existing projects and not be part of the first convergence focus.
+
+We should promote the same libraries to be used both in the CSAR creation (e.g. in an IDE) and onboarding/validation (into a catalog).
+
+The process of validation and the trust in the validation artifacts (e.g. authentication) also affect both creation and onboarding.
+
+
+
+(next item)
+What projects currently have a SO / NFVO (service orchestrator)
+
+(Bryan)
+
+Common elements within VNFM
+
+- Parser
+- Workflow
+- VIM Plugins
+- Stateful - Availability
+           - Scale
+           - Hierachial 
+           
+Takeaways from 2nd session
+Beyond the catalog - VNFM is the next area of potential reuse:
+Characteristics of a VNFM (to help recognize one):
+- Manages nodes and other VNF resources/lifecycle via VIMs
+- Manages resources in a single "site"
+- Owns VNFDs
+
+First VNFM aspects to consider converging on:
+- Parsers: used in validation, creation of in-memory DOM, in general serialization/deserialization
+- Workflow: implements resource and lifecycle management for the VNF
+- Multi-VIM plugins: adapt the generic workflow model to APIs of specific VIMs as needed (e.g. associated with model elements)
+
+Other VNFM aspects to consider open source collaboration on:
+- Scalability/reliability: clustering and HA for the VNFM. Since it's stateful and presumably is solely responsible for managing a VNF (stateless VNFMs backed by a shared database may be another approach, but not considered here), the VNFMs need to be reliable and able to recover state quickly.
+- FCAPS: consider overall needs of VNF reliability as related
+- KPIs and eventing supporting analytics, FCAPS, etc
+- Policy: representation and handling of event-condition-action
+
+The NFVO / "Service Orchestration" scope includes broader and more complex functions needing further discussion/clarification, that may be longer term opportunities:
+Characteristics of an NFVO (to help recognize one):
+- Owns NSDs and has the service view across VNFMs and from the top down
+- Manages services thru VNFMs
+- Manages services that span VNFMs
+- Manages an overall site
+
+NFVO aspects to consider open source collaboration on:
+- Handling multi-VNF services including fowarding graphs across them
+- Handling multi-site/domain services
+- Maintaining a resource map across the network, and offering ways to access that map for decision making (e.g. placement)
+- Managing WAN aspects, e.g. underlay networks and services that span the WAN
+
+Other issues to consider (areas of some disagreement):
+- Relationship of SFC to Forwarding Graphs (across VNFs) and Forwarding Paths (inside VNFs)
+
+Example of VNFM vs NFVO scope (likely needs further discussion!):
+
+           NFVO
+           /        \
+          /          \
+ VNFM-A     VNFM-B
+        /\            /\
+       /  \          /  \
+    C   D       C  D
+
+VNFM-A and VNFM-B are in different sites.
+NFVO has view across these sites.
+VNFM-B may manage a resource (e.g. a database server) that is deployed as a backup to a VNF's database server managed by VNFM-A. But VNFM-A is not managing that resource in site-B - rather VNFM-B is managing that resource.
+
+NEXT STEPS:
+1) Assess the code bases that we want to start sharing
+For the two main areas in near-term scope (Catalog, VNFM), open source projects should identify the specific components they are interested in sharing (i.e. offering to other projects as a common base), e.g.:
+- For ARIA: TOSCA parser, workflow engine, multi-VIM plugin framework
+- For Rift.ware: multi-VIM plugin framework
+
+2) Define a process for continuing the collaboration
+We will plan additional events, and share information/discussions in collaboration spaces. OPNFV can provide a common place for this, e.g. thru its agile tools such as the wiki, JIRA, Slack, Trello, etc. A proposal for this will be sent to the attendees with the meetup summary.
+

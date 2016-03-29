@@ -1,0 +1,208 @@
+MODM Meeting Day 1 Meeting MInutes
+
+Attendees:  Tom Nadeau, Brian Sullivan, Shane Ronan, Karthik Nataranjan, Lisa Alger, David Meyer, Sridar Ramaswami, Marc Cohen, Chris Donley, Gershon Shatzberg, Uri Elzur, Chris Price, Louis Fourie, Vishwanath Jayaraman, Arthur Berezin, Amir Levy, Dave Neary, Jerome Marc, Ulas Kozat, Tetsuya Nakamura
+
+
+#topic Sridhar presents Tacker Presentation
+
+(we'll align the notes later)
+
+Sridhar: Tacker project was created due to a gap in the orchestration space
+Now in the 3rd release (Mitaka), was accepted as an oifficial OpenStack project.
+Tacker Community diversity is growing in the Big Tent for Mitaka.
+Initial feature set focused on VNFM, now expanding to surrounding functions e.g. catalog.
+- Bryan: how does catalog need relate to other catalog-related needs in Openstack e.g. thru Murano.
+Catalog has VNFD and will expand to NSD.
+- Bryan: catalog distribution is also an issue in multisite
+Chris: Concern that VIM NBI need to be consistent - how does Tacker ensure that
+Sridhar: don't see Tacker as part of VIM
+Chris: How does the project help advance the VIM NBI pattern convergence. 
+Chris: Are all the interfaces in the diagram intending to be standardized/converged in OpenStack? 
+Sridhar: Interest is converging on the data models first; intent is to promote converged APIs but a standard is a broader question
+Bryan: convergence should be focused on first thru open source (data formats and interfaces); standards should cement/abstract the converged APIs thru Info Models
+Sridhar: Tacker is working with OASIS and implements the latest CSD03
+- http://docs.oasis-open.org/tosca/TOSCA/v1.0/csd03/TOSCA-v1.0-csd03.html
+- CSD03 being referred to is the NFV Simple Profile (not yet public): current public version is http://docs.oasis-open.org/tosca/tosca-nfv/v1.0/csd02/tosca-nfv-v1.0-csd02.html
+Bryan: we need the SDOs to move faster to publish their drafts; the draft is member-accessible only
+In Mitaka, multiple VIM endpoints will be supported. This will support multiple OpenStack releases in deployment.
+This will also support multiple ecosystems/IaaS providers thru InfraDrivers e.g. ESXi
+Chris: expansion to services will result in Tacker as NFVO managing Tacker as VNFM in distributed scenarios
+Chris: separation between device and service orchestration effect?
+Prakash: mentions Domino project
+
+Brian: What is Tacker doing for interfaces standardization?
+
+Tom: what kinds of standards are needed (if any) around this or is something like an open stack officially relased API ok?
+
+Is the focus to create an e2e vnf solution together? 
+
+Sridhar:  goal is to create a solid VNFM
+
+Prakash: from a telco perspective, nfvo/nfvm separation is required but vendors are putting them together.  but this can actually work. 
+
+Bryan: re placement policy, we need to take a close look at the alignment with TOSCA or whether it needs to be fed back to OASIS etc (which implies also alignment may be beeded across projects)
+
+(questions about catalog)
+?: Catalog is critical for carriers. We need to know what images are used where. Aggregation will help. But need a single reference point for state of instantiation.
+Bryan: agree that function is critical - our ECOMP A&AI provides that in our solution as there was no available open source for that function (other than basic open source building blocks e.g. database).
+Chris: ultimately the catalog will likely move up in the stack (e.g. to NFVO)
+Sridhar: agree, that is on the roadmap
+Chris: 3-word slogan on roadmap?
+Bryan: re placement policy, we need to take a close look at the alignment with TOSCA or whether it needs to be fed back to OASIS etc (which implies also alignment may be beeded across projects)
+
+(questions about catalog)
+?: Catalog is critical for carriers. We need to know what images are used where. Aggregation will help. But need a single reference point for state of instantiation.
+Sridhar: Image management, scaling, monitoring
+TOM: Is it necessary to have a single catalogue or is it only logically needed?
+
+SHANE: logical. can exist across different funcitons.
+
+
+#topic  Bryan Sullivan Presents OPNFV Modeling
+https://wiki.opnfv.org/_media/models/models_for_mano_meetup.pptx
+   
+   
+prakash:
+
+#topic Shane Ronan & Brian Sullivan Open Discussion from SPs
+
+Why do we have 47 orchestration solutions even within a single carrier/SP?  How can the wider industry do this?
+
+What are NFVs?  It is unclear.  There is a standard benchmark for an NFV, then ETSI but also internal applications and other things that do not fit into any of these frameworks.
+You mean a VNF?
+
+Tom: is that a good thing (that vs having a diversity of solutions, carriers may go the other way and seek a single solution provided by a vendor)
+(lots of discussion on the pros/cons of focus vs diversity)
+
+#topic Lakshmi and Artur: Open Source Mano
+
+OSM drivers We face (the risk of?) fragmentation - we need speed.
+Key OSM focuses: EPA, multi-VIM, Multi-site, SO/RO disaggregation
+(per SO/RO, diagram shows SO as comprising EMS+OSS/BSS, RO is MANO minus VNFM)
+- Bryan: what is the significance of the cutout in MANO? (not part of OpenMANO which is shown as RO in the next slide)
+Rift.ware: https://github.com/RIFTIO/RIFT.ware/
+- Bryan: What is "launchpad" shown as "SO/NS"? Part of Rift.ware? (Rift.ware core)
+Slide 12 shows NFVI is out of OSM scope, which focuses from external customer-facing portals, thru service and network design/deployment/management
+
+Bryan: re distinction between generic and specific VNFM, how does that split relate to the VNFD having both generic and specific aspects (e.g. specific being potentially VNF-specific functions/behavior supported by scripts): it's a work in progress, but OSM is mostly focusing on the generic VNFM functions.
+
+OSM intends to enable integration of the specific VNFM functions, rather than developing them as part of OSM.
+
+Information Models (IM) are key to enable the open ecosystem: IM will be based upon ETSI ISG, with extensions brought back.
+
+Shane: what is the risk that the extensions are not adopted by the ISG?
+- socialization has been underway; positive the extensions will be adopted
+Extensions will be published by the ETSI plenary in April. (they are already on github for rift.ware)
+
+?: Is OSM using the Dublin drafts as base?
+- No, MANO.001; incremental changes are not yet assessed
+
+Chris: OSM is derived from open source, but is it a software dev or integration project?
+- software dev
+
+OpenVIM is from OpenMANO. The reason for having two VIMs shown in OSM is as proof of the concept for cross-VIM interoperability.
+
+#action lets discuss some of these collaboration vectors at tomorrow's hacking/dev-centered sessions.
+
+
+#topic Uri Ulzur Industry Agreed INformation Model for MANO and VIM
+
+global collaboration among network operators, vendors is needed
+
+
+#topic CloudForms based upon ManageIQ, Dave and Jerome, Red Hat
+https://github.com/ManageIQ/manageiq
+
+LWN article: https://lwn.net/Articles/680060/
+
+Project-specific internal config/policy format with translators from Heat, CloudFormation
+Compatible with https://www.openshift.org/ and Kubernetes.
+https://www.openstack.org/summit/vancouver-2015/summit-videos/presentation/openstack-infrastructure-management-with-manageiq
+
+Dave: (shows Open-O draft architecture) "ManageIQ can handle most of this today"
+network awareness is being beefed up (working with Nuage to improve)
+service catalog does not support TOSCA yet (but have translators?)
+Tom: slide on key goals for NFV contains the type of items we want to focus on this week for alignment
+Licensing question: Inbound contributions are Apache v2, the download/distribution of ManageIQ is dual license GPL/Apache v2, due to a dependency on a GPL v2 Javascript library. Intention is to drop GPL once we manage to drop the dependency.
+
+Main goal of presentation: To get input from operators on usecases, to get feedback on where we need to work, and to make this audience aware of what ManageIQ can do today".
+
+[Copied from slide deck]
+
+ManageIQ managing OpenStack
+
+ * Overcloud view added in 2013 & Undercloud Infra. Provider in 2015
+ * Inventory for Heat Stacks
+ * Connect Cloud provider to Infra provider
+ * Autoscale Compute Nodes via Automate
+ * Infrastructure Host Events & Event processing
+ * Handling of Power States (Paused, Rebooting, Waiting, etc)
+ * Tenant Filtering based on Security Groups, Floating IPs, and Networks
+
+Complementing OpenStack
+ * Service Catalog & Orchestration
+ * Smart-State, Drift Analysis and Genealogy
+ * Right-Sizing of Resources
+ * Capacity & Utilization Management
+ * Events & Alerts
+ * Compliance & Policy Enforcement Validation
+
+Features relevant to MANO
+
+ * North & Southbound interfaces / REST APIs
+ * Service Catalog / Service Orchestration
+ * Import/Export & Parsing of multiple formats (XML & Tuskar)
+ * Event-Condition-Action model for Event & Alert handling
+ * UI re-branding (e.g. Jellyfish)
+ * Enterprise Scalability & Reliability
+ * Extensions Depot & Community
+
+#topic ARIA, Arthur Berezin, GigaSpaces
+
+ARIA Slides Presentation 
+https://docs.google.com/presentation/d/1Qmm9emJ8WFNo_fQxKdrxFU7ehGWeLc4sHmIcEhRi6t8/edit#slide=id.p 
+http://ariatosca.org/
+https://github.com/aria-tosca
+
+Cloudify CLI tool orchestrates TOSCA blueprints. 
+Aria is a simple python-based library implementing the TOSCA spec, intended to be used as a basis for prototyping new model features and as a modeling tool.
+Contributing ARIA to ASF for a broader open governance.
+Can create a chain between two VNFs through their blueprints, via node relationships.
+
+Bryan: 
+- how is YANG leveraged by the parser? Based upon node type ARIA knows to invoke an API of a SDNC
+- can a service chain or network connection enabling a relationship be provisioned if only one VNF is deployed by ARIA? Yes, if both devices are modeled (need to dig deeper into this)
+
+(shows TOSCA+YANG modeling of DNS service)
+
+#topic OPEN-O for MODM, Chris Donley
+scope: VNFM, NFVO, SDN Orchestration (working across multiple SDNCs, using YANG as the common SDNC NBI)
+Considering integrating Tacker.
+Looking to work with OPNFV.
+
+Ulas: What would be a plugin concept for G-VNFM to S-VNFM? What is the role of Tacker or G-VNFM in each open source MANO projects presented today. We should go one step further in power point slides to deliniate the expectations on common components.
+Uri: we need to align on concepts such as VIM in a broader sense. Driver architectures would follow alignment. 
+
+Sridhar: VNF-specific lifcycle hooks can be used to integrate a G-VNFM with an S-VNFM as needed.
+- Bryan: this could be thru scripts or a REST notification to the S-VNFM. We should talk about the options and what would work best in a distributed environment. (presumably both VNFMs may need to be relatively local to the VNF)
+
+#topic Juju - generic open source VNFM, Artur Tyloch
+Juju is used to deploy OpenStack etc in OPNFV
+- Bryan: this supports my suggestion earlier that VNFMs and TOSCA can be used to provide both a generic NFVI installer and VNF manager.
+"Generic" means domain/vendor requirements agnostic.
+Uri: is the focus on management or orchestration?
+- Artur: management
+Uri: what are the plans for data models?
+- Artur: not looking to standardize JuJu data models for telco use cases
+- Bryan: it's my understanding that  JuJu will support TOSCA at least for importing
+Chris: do you intend to support scale need determination or taking action only
+- Artur: responding to need to scale rather than determining the need
+JuJu uses higher level concepts than infra management tools e.g. puppet - any tool can be used by a charm to managed the infra or VNF.
+Example being shown: https://jujucharms.com/u/navid-nikaein/oai-hss/trusty/1
+Also https://jujucharms.com/u/navid-nikaein/oai-epc/trusty/22
+And of course https://jujucharms.com/u/navid-nikaein/oai-enb/trusty/14
+http://www.ubuntu.com/cloud/lxd
+
+#topic wrapup
+Plan for tomorrow is to discuss the intersection of what we discussed today. Meeting is at the Mariott.
+

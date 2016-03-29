@@ -1,0 +1,120 @@
+Management and Orchestration Developer Meet-up (MODM) #1
+
+Meeting Registration: https://modm-1.eventbrite.co.uk
+Mailing List: https://groups.google.com/forum/#!forum/modm-discuss
+
+INSTRUCTIONS: This is a collaborative agenda. Please be polite!
+              If you wish to propose a topic for discussion, feel
+              free to insert it into an open time-slot. If you're not
+              sure, feel free to email the organizers.
+              
+WebEx URL:  https://meetings.webex.com/collabs/#/meetings/detail?uuid=M7JYFXNQZQVY9IU5MKNSSJRZC1-4O2
+
+Meeting number: 191 403 115
+Audio Connection
++1-415-655-0001 US TOLL
+Access code: 191 403 115
+
+Bryan will take notes at https://etherpad.opnfv.org/p/modm (can't create a subpage on this pad)
+
+MODM-1 Day 1 Agenda
+22-March-2016
+Brocade building #3, 
+130 Holger Way, San Jose, CA 95134
+----------------------------------------------------------
+
+- Attendee arrival and badging (8:00 - 9:00)
+    Please come to the front desk of Brocade building 3
+    to get a visitor badge. Someone will be there to sign you in
+    and direct you to the theatre-style meeting room.
+    
+    Ample parking is available in the adjacent Brocade 
+    parking garage. 
+
+- Introductions (9:00 - 9:30)
+    speaker: Tom Nadeau
+    referenences(s): tnadeau@brocade.com
+
+- Tacker (9:30 - 10:15)
+    speaker: Sridhar Ramaswamy
+    reference(s): sramasw@Brocade.com
+                  https://wiki.openstack.org/wiki/Tacker
+
+- OPNFV Models Project (11:00 - 11:20)
+    speaker: Bryan Sullivan
+    slides: https://wiki.opnfv.org/_media/models/models_for_mano_meetup.pptx
+    
+- Informal Operator Disussion  (11:20-11:45)
+    speaker: Shane Ronan
+    
+- Lunch Break
+    time: 12-1 PM
+    Lunch provided
+
+- ETSI Open Source MANO (OSM) (12:30 - 13:15)
+    speaker: Lakshmi Sharma
+    reference(s): https://osm.etsi.org/welcome/
+    
+- Enhanced Platform Awareness (13:15 - 14:00)
+    speaker: Uri Elzur
+    reference(s):
+
+- ManageIQ (14:00 - 14:45)
+    speaker: Jerome Marc
+    reference(s): http://manageiq.org/
+
+- Working Coffee Break (14:30 - 14:45)
+
+- ARIA (14:45 - 15:30)
+    speaker: Arthur Berezin
+    reference(s): https://github.com/aria-tosca
+
+- Open-O (15:30 - 16:15)
+    speaker: Chris Donley
+    reference(s):
+
+- Juju - generic open source VNFM (16:15 - 17:00)
+    speaker: Artur Tyloch
+    reference(s): https://jujucharms.com/ 
+
+- Outtro, Summary and Conclusions (17:00)
+    speaker: Tom Nadeau
+    
+- Informal Gathering at RoK 
+    RoK is located in the strip mall area adjacent to Brocade and 
+    the Brocade parking garage, and is an easy walk from Building 3.
+
+
+MODM-1 Day 2 Agenda
+23-March-2016
+Courtyard Mariott, 
+111 Holger Way San Jose, CA
+----------------------------------------------------------
+
+- Attendee arrival/registration 0800 - 09:00
+    The day 2 meeting will be located at the Courtyard hotel, across
+    the street from Brocade's campus. There will be signs in the hotel
+    to help you find the break-out style meeting room.
+
+    Ample parking is available in the hotel parking lot, and in the
+    Brocade parking garage .
+
+- Introductions and Agenda Bashing 09:00-09:30
+    Tom Nadeau
+    time: 
+    referenences(s):
+
+- Group Break-out sessions 10:00-12:00
+
+- Lunch provided 12:00-01:00
+
+- Group Break-out sessions (cont) 01:00-16:00
+
+- Outtro, Summary and Conclusions (16:00-15:00)
+    speaker: Tom Nadeau
+    
+- Informal Gathering at Mariott Courtyard Hotel Bar
+
+
+
+
